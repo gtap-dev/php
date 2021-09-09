@@ -4,7 +4,9 @@ A mostly reasonable approach to PHP
 
 This is a superset of the [PSR-12].
 
-### Previous language versions
+## 1. Overview
+
+### 1.1. Previous language versions
 
 Throughout this document, any instructions may be ignored if they do not exist in versions
 of PHP supported by your project.
@@ -745,10 +747,10 @@ The body of each structure must be enclosed by braces. This standardizes how
 the structures look and reduces the likelihood of introducing errors as new
 lines get added to the body.
 
-### 5.1 `if`, `elseif`, `else`
+### 5.1 `if`, `else if`, `else`
 
 An `if` structure looks like the following. Note the placement of parentheses,
-spaces, and braces; and that `else` and `elseif` are on the same line as the
+spaces, and braces; and that `else` and `else if` are on the same line as the
 closing brace from the earlier body.
 
 ~~~php
@@ -756,15 +758,14 @@ closing brace from the earlier body.
 
 if ($expr1) {
     // if body
-} elseif ($expr2) {
-    // elseif body
+} else if ($expr2) {
+    // else if body
 } else {
     // else body;
 }
 ~~~
 
-The keyword `elseif` should be used instead of `else if` so that all control
-keywords look like single words.
+The keyword `else if` should be used instead of `elseif`.
 
 Expressions in parentheses may be split across multiple lines, where each
 subsequent line is indented at least once. When doing so, the first condition
@@ -778,14 +779,15 @@ the line, not a mix of both.
 
 if (
     $expr1
-    && $expr2
-) {
-    // if body
-} elseif (
-    $expr3
+    && ($expr2 || $expr3)
     && $expr4
 ) {
-    // elseif body
+    // if body
+} else if (
+    $expr1
+    && $expr2
+) {
+    // else if body
 }
 ~~~
 
@@ -987,7 +989,7 @@ followed by at least one space:
 ~~~php
 if ($a === $b) {
     $foo = $bar ?? $a ?? $b;
-} elseif ($a > $b) {
+} else if ($a > $b) {
     $foo = $a + $b * $c;
 }
 ~~~
@@ -1136,7 +1138,7 @@ $instance = new class {};
 
 The opening brace may be on the same line as the `class` keyword so long as
 the list of `implements` interfaces does not wrap. If the list of interfaces
-wraps, the brace must be placed on the line immediately following the last
+wraps, the brace must be placed on the same line following the last
 interface.
 
 ~~~php
@@ -1147,16 +1149,22 @@ $instance = new class extends \Foo implements \HandleableInterface {
     // Class content
 };
 
-// Brace on the next line
 $instance = new class extends \Foo implements
     \ArrayAccess,
     \Countable,
-    \Serializable
-{
+    \Serializable {
     // Class content
 };
 ~~~
 
+
+## Resources
+- [PHP Manual][PHP]
+- [PHP Standards Recommendations][PSR]
+- [PHP Clean Code][clean-code]
+
+[PSR]: https://www.php-fig.org/psr/
+[PHP]: https://www.php.net/manual/en/
 [PSR-12]: https://www.php-fig.org/psr/psr-12/
 [PSR-1]: https://www.php-fig.org/psr/psr-1/
 [PSR-2]: https://www.php-fig.org/psr/psr-2/
@@ -1170,4 +1178,3 @@ $instance = new class extends \Foo implements
 [string]: http://php.net/manual/en/language.operators.string.php
 [type]: http://php.net/manual/en/language.operators.type.php
 [clean-code]: https://github.com/jupeter/clean-code-php
-
