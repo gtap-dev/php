@@ -241,6 +241,8 @@ opening and closing tags.
 Import statements must never begin with a leading backslash as they
 must always be fully qualified.
 
+Import statements should be logically ordered and grouped.
+
 The following example illustrates a complete list of all blocks:
 
 ~~~php
@@ -267,8 +269,7 @@ use const Another\Vendor\CONSTANT_D;
 /**
  * FooBar is an example class.
  */
-class FooBar
-{
+class FooBar {
     // ... additional PHP code ...
 }
 
@@ -345,10 +346,10 @@ new Foo();
 The `extends` and `implements` keywords must be declared on the same line as
 the class name.
 
-The opening brace for the class must go on its own line; the closing brace
+The opening brace for the class must go on the same line; the closing brace
 for the class must go on the next line after the body.
 
-Opening braces must be on their own line and must not be preceded or followed
+Opening braces must be on the same line and must not be preceded or followed
 by a blank line.
 
 Closing braces must be on their own line and must not be preceded by a blank
@@ -363,8 +364,7 @@ use FooClass;
 use BarClass as Bar;
 use OtherVendor\OtherPackage\BazClass;
 
-class ClassName extends ParentClass implements \ArrayAccess, \Countable
-{
+class ClassName extends ParentClass implements \ArrayAccess, \Countable {
     // constants, properties, methods
 }
 ~~~
@@ -386,8 +386,7 @@ use OtherVendor\OtherPackage\BazClass;
 class ClassName extends ParentClass implements
     \ArrayAccess,
     \Countable,
-    \Serializable
-{
+    \Serializable {
     // constants, properties, methods
 }
 ~~~
@@ -404,8 +403,7 @@ namespace Vendor\Package;
 
 use Vendor\Package\FirstTrait;
 
-class ClassName
-{
+class ClassName {
     use FirstTrait;
 }
 ~~~
@@ -422,8 +420,7 @@ use Vendor\Package\FirstTrait;
 use Vendor\Package\SecondTrait;
 use Vendor\Package\ThirdTrait;
 
-class ClassName
-{
+class ClassName {
     use FirstTrait;
     use SecondTrait;
     use ThirdTrait;
@@ -440,8 +437,7 @@ namespace Vendor\Package;
 
 use Vendor\Package\FirstTrait;
 
-class ClassName
-{
+class ClassName {
     use FirstTrait;
 }
 ~~~
@@ -455,8 +451,7 @@ namespace Vendor\Package;
 
 use Vendor\Package\FirstTrait;
 
-class ClassName
-{
+class ClassName {
     use FirstTrait;
 
     private $property;
@@ -469,8 +464,7 @@ note of indentation, spacing, and new lines.
 ~~~php
 <?php
 
-class Talker
-{
+class Talker {
     use A;
     use B {
         A::smallTalk insteadof B;
@@ -484,10 +478,7 @@ class Talker
 
 ### 4.3 Properties and Constants
 
-Visibility must be declared on all properties.
-
-Visibility must be declared on all constants if your project PHP minimum
-version supports constant visibilities (PHP 7.1 or later).
+Visibility must be declared on all properties and constants.
 
 The `var` keyword must not be used to declare a property.
 
@@ -506,8 +497,7 @@ A property declaration looks like the following:
 
 namespace Vendor\Package;
 
-class ClassName
-{
+class ClassName {
     public $foo = null;
     public static int $bar = 0;
 }
@@ -522,7 +512,7 @@ protected or private visibility. That is, an underscore prefix explicitly has
 no meaning.
 
 Method and function names must not be declared with space after the method name. The
-opening brace must go on its own line, and the closing brace must go on the
+opening brace must go on the same line, and the closing brace must go on the
 next line following the body. There must not be a space after the opening
 parenthesis, and there must not be a space before the closing parenthesis.
 
@@ -534,10 +524,8 @@ parentheses, commas, spaces, and braces:
 
 namespace Vendor\Package;
 
-class ClassName
-{
-    public function fooBarBaz($arg1, &$arg2, $arg3 = [])
-    {
+class ClassName {
+    public function fooBarBaz($arg1, &$arg2, $arg3 = []) {
         // method body
     }
 }
@@ -549,8 +537,7 @@ parentheses, commas, spaces, and braces:
 ~~~php
 <?php
 
-function fooBarBaz($arg1, &$arg2, $arg3 = [])
-{
+function fooBarBaz($arg1, &$arg2, $arg3 = []) {
     // function body
 }
 ~~~
@@ -568,10 +555,8 @@ list.
 
 namespace Vendor\Package;
 
-class ClassName
-{
-    public function foo(int $arg1, &$arg2, $arg3 = [])
-    {
+class ClassName {
+    public function foo(int $arg1, &$arg2, $arg3 = []) {
         // method body
     }
 }
@@ -590,8 +575,7 @@ between them.
 
 namespace Vendor\Package;
 
-class ClassName
-{
+class ClassName {
     public function aVeryLongMethodName(
         ClassTypeHint $arg1,
         &$arg2,
@@ -614,10 +598,8 @@ declare(strict_types=1);
 
 namespace Vendor\Package;
 
-class ReturnTypeVariations
-{
-    public function functionName(int $arg1, $arg2): string
-    {
+class ReturnTypeVariations {
+    public function functionName(int $arg1, $arg2): string {
         return 'foo';
     }
 
@@ -641,10 +623,8 @@ declare(strict_types=1);
 
 namespace Vendor\Package;
 
-class ReturnTypeVariations
-{
-    public function functionName(?string $arg1, ?int &$arg2): ?string
-    {
+class ReturnTypeVariations {
+    public function functionName(?string $arg1, ?int &$arg2): ?string {
         return 'foo';
     }
 }
@@ -657,8 +637,7 @@ There must not be a space between the variadic three dot operator and the argume
 name:
 
 ```php
-public function process(string $algorithm, ...$parts)
-{
+public function process(string $algorithm, ...$parts) {
     // processing
 }
 ```
@@ -667,8 +646,7 @@ When combining both the reference operator and the variadic three dot operator,
 there must not be any space between the two of them:
 
 ```php
-public function process(string $algorithm, &...$parts)
-{
+public function process(string $algorithm, &...$parts) {
     // processing
 }
 ```
@@ -686,14 +664,12 @@ declaration.
 
 namespace Vendor\Package;
 
-abstract class ClassName
-{
+abstract class ClassName {
     protected static $foo;
 
     abstract protected function zim();
 
-    final public static function bar()
-    {
+    final public static function bar() {
         // method body
     }
 }
@@ -717,9 +693,9 @@ Foo::bar($arg2, $arg3);
 
 Argument lists may be split across multiple lines, where each subsequent line
 is indented once. When doing so, the first item in the list must be on the
-next line, and there must be only one argument per line. A single argument being
+next line, and there must be only one argument per line. A single argument (except for anonymous function) being
 split across multiple lines (as might be the case with an anonymous function or
-array) does not constitute splitting the argument list itself.
+array) constitutes splitting the argument list itself.
 
 ~~~php
 <?php
@@ -734,9 +710,18 @@ $foo->bar(
 ~~~php
 <?php
 
-somefunction($foo, $bar, [
-  // ...
-], $baz);
+somefunction(function () {
+    // ...
+}, $foo, $bar);
+
+somefunction(
+    $foo,
+    $bar,
+    [
+      // ...
+    ],
+    $baz
+);
 
 $app->get('/hello/{name}', function ($name) use ($app) {
     return 'Hello ' . $app->escape($name);
