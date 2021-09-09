@@ -215,6 +215,34 @@ Any new types and keywords added to future PHP versions must be in lower case.
 Short form of type keywords must be used i.e. `bool` instead of `boolean`,
 `int` instead of `integer` etc.
 
+Using types is preferred but not required. Use with caution!
+
+~~~php
+function fooBar(string $foo): string {
+    return sprintf('%sBar', $foo);
+}
+
+// nullable string
+function fooBarBaz(?string $foo): ?string {
+    if ($foo) {
+        return sprintf('%sBarBaz', $foo);
+    }
+    
+    return null;
+}
+~~~
+
+~~~php
+// nullable string staring from PHP 8
+function fooBarBaz(string|null $foo): string|null {
+    if ($foo) {
+        return sprintf('%sBarBaz', $foo);
+    }
+    
+    return null;
+}
+~~~
+
 ## 3. Declare Statements, Namespace, and Import Statements
 
 The header of a PHP file may consist of a number of different blocks. If present,
@@ -494,14 +522,16 @@ There must be a space between type declaration and property name.
 
 A property declaration looks like the following:
 
+Static class properties should be declared before non-static properties.
+
 ~~~php
 <?php
 
 namespace Vendor\Package;
 
 class ClassName {
-    public $foo = null;
     public static int $bar = 0;
+    public $foo = null;
 }
 ~~~
 
@@ -518,6 +548,8 @@ opening brace must go on the same line, and the closing brace must go on the
 next line following the body. There must not be a space after the opening
 parenthesis, and there must not be a space before the closing parenthesis.
 
+Static class methods should be declared after non-static methods.
+
 A method declaration looks like the following. Note the placement of
 parentheses, commas, spaces, and braces:
 
@@ -528,6 +560,10 @@ namespace Vendor\Package;
 
 class ClassName {
     public function fooBarBaz($arg1, &$arg2, $arg3 = []) {
+        // method body
+    }
+    
+    public static function fooBar($arg1, &$arg2, $arg3 = []) {
         // method body
     }
 }
@@ -958,7 +994,35 @@ try {
 }
 ~~~
 
-## 6. Operators
+## 6. Strings
+
+Use single quotes '' for strings or "" for string templates.
+
+Strings that cause the line to go over 100 characters should not be written across multiple lines using string concatenation.
+
+~~~php
+$errorMessage = 'This is a super long error that was thrown because of Batman. When you stop to think about how Batman had anything to do with this, you would get nowhere fast.';
+~~~
+
+### 6.1 String interpolation
+
+Prefer sprintf/printf or string template "" for string interpolation.
+
+~~~php
+$text = sprintf('Hello %s, welcome to our class %s.', $name, $className);
+~~~
+
+~~~php
+$text = "Hello $name, welcome to our class $className.";
+~~~
+
+Use dot operator only for single concatenation.
+
+~~~php
+$price = $price . '€';
+~~~
+
+## 7. Operators
 
 Style rules for operators are grouped by arity (the number of operands they take).
 
@@ -967,7 +1031,7 @@ used for readability purposes.
 
 All operators not described here are left undefined.
 
-### 6.1. Unary operators
+### 7.1. Unary operators
 
 The increment/decrement operators must not have any space between
 the operator and operand.
@@ -981,7 +1045,7 @@ Type casting operators must not have any space within the parentheses:
 $intValue = (int) $input;
 ~~~
 
-### 6.2. Binary operators
+### 7.2. Binary operators
 
 All binary [arithmetic][], [comparison][], [assignment][], [bitwise][],
 [logical][], [string][], and [type][] operators must be preceded and
@@ -994,7 +1058,7 @@ if ($a === $b) {
 }
 ~~~
 
-### 6.3. Ternary operators
+### 7.3. Ternary operators
 
 The conditional operator, also known simply as the ternary operator, must be
 preceded and followed by at least one space around both the `?`
@@ -1009,7 +1073,7 @@ must follow the same style rules as other binary [comparison][] operators:
 $variable = $foo ?: 'bar';
 ~~~
 
-## 7. Closures
+## 8. Closures
 
 Closures must be declared with a space after the `function` keyword, and a
 space before and after the `use` keyword.
@@ -1125,7 +1189,7 @@ $foo->bar(
 );
 ~~~
 
-## 8. Anonymous Classes
+## 9. Anonymous Classes
 
 Anonymous Classes must follow the same guidelines and principles as closures
 in the above section.
@@ -1157,6 +1221,76 @@ $instance = new class extends \Foo implements
 };
 ~~~
 
+## 10. Comments
+
+Use /** ... */ for multiline comments.
+
+Use // for single line comments. Place single line comments on a newline above the subject of the comment. Put an empty line before the comment unless it’s on the first line of a block.
+
+Start all comments with a space to make it easier to read.
+
+~~~php
+// fooBarBaz
+
+/**
+ * foo
+ * bar
+ * baz
+ */
+~~~
+
+Prefer meaningful and pronounceable names over comments.
+
+~~~php
+// add body classes
+add_filter('body_class', [$this, 'bodyClassFilter']);
+~~~
+
+~~~php
+// class FooBar
+class FooBar {
+    /**
+     * Current object ID
+     *
+     * @var int|string|null
+     */
+    public $IO;
+}
+~~~
+
+~~~php
+add_filter('body_class', [$this, 'addBodyClasses']);
+~~~
+
+~~~php
+class FooBar {
+    public int|string|null $IO;
+}
+~~~
+
+## 10.1 TODO and FIXME
+
+Prefixing your comments with FIXME or TODO helps other developers quickly understand if you’re pointing out a problem that needs to be revisited, or if you’re suggesting a solution to the problem that needs to be implemented. These are different than regular comments because they are actionable. The actions are FIXME: -- need to figure this out or TODO: -- need to implement.
+
+Use // FIXME: to annotate problems.
+~~~php
+// FIXME: shouldn’t use a global here
+global $total;
+
+$total = 0;
+~~~
+
+Use // TODO: to annotate solutions to problems.
+~~~php
+class Calculator {
+    private $total;
+
+    public function __constructor() {
+        // TODO: total should be configurable by an options param
+        $this->total = 0;
+    }
+}
+~~~
 
 ## Resources
 - [PHP Manual][PHP]
