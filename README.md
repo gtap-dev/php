@@ -4,6 +4,8 @@ A mostly reasonable approach to PHP
 
 This is a superset of the [PSR-12].
 
+**We suggest you familiarize yourself with the [clean-code] principles first.** 
+
 ## 1. Overview
 
 ### 1.1. Previous language versions
@@ -1295,7 +1297,7 @@ class Calculator {
 ## Resources
 - [PHP Manual][PHP]
 - [PHP Standards Recommendations][PSR]
-- [PHP Clean Code][clean-code]
+- [PHP Clean Code][clean-code], please do read this
 
 [PSR]: https://www.php-fig.org/psr/
 [PHP]: https://www.php.net/manual/en/
